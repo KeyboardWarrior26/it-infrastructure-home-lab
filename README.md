@@ -11,7 +11,7 @@ The purpose of this project is to develop practical **IT support, systems admini
 | Phase                                  | Status     |
 | -------------------------------------- | ---------- |
 | Phase 1 — Infrastructure Foundation    | ✅ Complete |
-| Phase 2 — Windows Administration       | 🔜 Planned |
+| Phase 2 — Windows Administration       | ✅ Complete |
 | Phase 3 — Networking & Troubleshooting | 🔜 Planned |
 | Phase 4 — Linux Administration         | 🔜 Planned |
 | Phase 5 — Microsoft 365                | 🔜 Planned |
@@ -253,6 +253,159 @@ These incidents provided practical experience with identifying problems, investi
 * Verification and testing
 
 ---
+
+
+# Phase 2 — Windows Administration
+
+Phase 2 focused on developing practical Windows system administration and
+helpdesk troubleshooting skills in a domain environment.
+
+The objective was to simulate common tasks performed by an IT Support
+Technician or Junior Systems Administrator, including user administration,
+access control, Group Policy, file sharing, remote support, and
+troubleshooting.
+
+## Active Directory Administration
+
+Using the Windows Server 2022 Domain Controller (DC01), I performed
+day-to-day Active Directory administrative tasks including:
+
+- Created and managed domain user accounts
+- Created Organizational Units (OUs) for departments
+- Created and managed security groups
+- Added and removed users from departmental groups
+- Reset user passwords
+- Disabled user accounts
+- Practised user onboarding and offboarding
+- Used group membership to control access to network resources
+
+This provided practical experience with identity and access management in
+a Windows domain environment.
+
+## Group Policy Administration
+
+Configured and tested Group Policy Objects (GPOs) to centrally manage
+domain users and computers.
+
+Tasks included:
+
+- Creating and linking GPOs
+- Linking policies to appropriate Organizational Units
+- Configuring departmental network-drive mappings
+- Applying security filtering using Active Directory security groups
+- Testing policies using domain user accounts
+- Updating policies using `gpupdate /force`
+- Troubleshooting policy application using `gpresult`
+
+## File Sharing and Permissions
+
+Created departmental shared folders and configured access using both SMB
+share permissions and NTFS permissions.
+
+Implemented role-based access control using Active Directory security
+groups so that users could access only the resources required by their
+department.
+
+Tasks included:
+
+- Creating SMB network shares
+- Configuring NTFS permissions
+- Assigning permissions through security groups
+- Testing access with different domain users
+- Troubleshooting "Access Denied" scenarios
+- Mapping departmental network drives using Group Policy
+
+## Troubleshooting Case Study — Network Drives Not Mapping
+
+During testing, departmental network drives failed to map automatically
+for some domain users.
+
+### Symptoms
+
+Group Policy Results showed the affected drive-mapping GPOs as:
+
+`Not Applied (Unknown Reason)`
+
+The client computer could still:
+
+- Contact the domain controller
+- Resolve DC01 through DNS
+- Access SYSVOL and NETLOGON
+- Successfully run `gpupdate`
+
+This indicated that basic domain connectivity was functioning correctly.
+
+### Investigation
+
+I used tools including:
+
+- `gpresult`
+- `gpupdate`
+- `ping`
+- DNS/network connectivity checks
+- Active Directory Users and Computers
+- Group Policy Management
+
+The issue was traced to Group Policy read/processing permissions.
+
+The computer account did not have the required ability to read the GPO
+files during policy processing.
+
+### Resolution
+
+I updated GPO delegation to grant **Authenticated Users** Read permission
+while retaining the appropriate departmental security groups for
+Security Filtering.
+
+I then verified that each departmental GPO was linked to the correct OU,
+forced a Group Policy update on CLIENT01, logged in with test domain
+accounts, and confirmed that the appropriate departmental network drives
+mapped successfully.
+
+### Skills Demonstrated
+
+This incident provided practical troubleshooting experience involving:
+
+- Active Directory
+- Group Policy
+- GPO delegation
+- Security filtering
+- SYSVOL
+- DNS
+- SMB
+- NTFS permissions
+- Role-Based Access Control (RBAC)
+- Windows client troubleshooting
+
+Rather than immediately changing configurations, I worked through the
+problem systematically by confirming connectivity, checking policy
+results, identifying the failed component, implementing the fix, and
+verifying the result.
+
+## Remote Administration
+
+Configured and tested remote administration between systems in the lab.
+
+Tasks included:
+
+- Remote Desktop Protocol (RDP)
+- Windows remote administration
+- AnyDesk remote-support testing
+- Testing connectivity before initiating remote sessions
+- Practising remote troubleshooting from a technician perspective
+
+## Phase 2 Outcome
+
+By completing Phase 2, I gained practical experience administering and
+troubleshooting a Windows domain environment.
+
+The phase strengthened my understanding of how Active Directory,
+Group Policy, DNS, SMB, NTFS permissions, security groups, and Windows
+clients work together in an enterprise environment.
+
+These exercises were designed to simulate common responsibilities
+encountered in IT Helpdesk, Desktop Support, and Junior Systems
+Administration roles.
 
 ## Project Roadmap
 
